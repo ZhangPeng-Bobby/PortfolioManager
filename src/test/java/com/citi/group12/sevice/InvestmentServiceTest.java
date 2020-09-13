@@ -1,8 +1,6 @@
-package com.citi.group12.dao.impl;
+package com.citi.group12.sevice;
 
-import com.citi.group12.dao.InvestmentDao;
-import com.citi.group12.dao.ProductDao;
-import com.citi.group12.entity.Investment;
+import com.citi.group12.dao.impl.ProductDaoImpl;
 import com.citi.group12.entity.Price;
 import com.citi.group12.entity.PriceType;
 import com.citi.group12.entity.Product;
@@ -21,10 +19,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class ProductDaoImplTest {
+class InvestmentServiceTest {
     @Autowired
-    private ProductDao productDao;
-
+    InvestmentService investmentService;
+    @Autowired
+    ProductDaoImpl productDao;
     Product product1;
 
 
@@ -45,30 +44,17 @@ class ProductDaoImplTest {
     }
 
     @Test
-    public void save() {
+    void addNewInvestment() {
+    }
+
+    @Test
+    void deleteInvestmentById() {
+    }
+
+    @Test
+    void getInvestmentVal() {
         productDao.save(product1);
-    }
-
-    @Test
-    void update() {
-    }
-
-    @Test
-    void findAll() {
-    }
-
-    @Test
-    void findOne() {
-    }
-
-    @Test
-    void delete() {
-    }
-
-    @Test
-    void findOneBySymbolAndDate() {
-        productDao.save(product1);
-        assertNotNull(productDao.findOneBySymbolAndDate(product1.getSymbol(),product1.getDate()));
+        assertNotNull(investmentService.getInvestmentVal(product1.getDate(),product1.getDate()));
         productDao.delete(product1.getId());
     }
 }

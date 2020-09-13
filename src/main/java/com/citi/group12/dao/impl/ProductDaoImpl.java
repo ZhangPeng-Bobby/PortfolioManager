@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -32,11 +33,11 @@ public class ProductDaoImpl implements ProductDao {
 
         //修改的内容
         Update update = new Update();
-        update.set("symbol",product.getSymbol()).set("date",product.getDate())
-                .set("price",product.getPrices());
+        update.set("symbol", product.getSymbol()).set("date", product.getDate())
+                .set("price", product.getPrices());
 
         //更新查询返回结果集的第一条
-        UpdateResult result =mongoTemplate.updateFirst(query,update, Investment.class);
+        UpdateResult result = mongoTemplate.updateFirst(query, update, Investment.class);
         //更新查询返回结果集的所有
         // mongoTemplate.updateMulti(query,update,UserEntity.class);
         return result.getMatchedCount();
@@ -48,14 +49,26 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public Product findOne(String id) {
+    public Product findOneById(String id) {
         return mongoTemplate.findOne(new Query(Criteria.where("id").is(id)), Product.class);
     }
 
     @Override
+    public Product findOneBySymbolAndDate(String symbol, Date date) {
+        Criteria criteria = new Criteria();
+        return mongoTemplate.findOne(new Query(criteria.andOperator(Criteria.where("symbol").is(symbol), Criteria.where("date").gte(date), Criteria.where("date").lte(date))), Product.class);
+    }
+
+    @Override
+    public List<Product> getProductBySymbolAndDateInterval(String symbol, Date startDate, Date endDate) {
+        Criteria criteria = new Criteria();
+        return mongoTemplate.find(new Query(criteria.andOperator(Criteria.where("symbol").is(symbol), Criteria.where("date").gte(startDate), Criteria.where("date").lte(endDate))), Product.class);
+    }
+
+    @Override
     public void delete(String id) {
-        Query query=new Query(Criteria.where("id").is(id));
-        mongoTemplate.remove(query,Product.class);
+        Query query = new Query(Criteria.where("id").is(id));
+        mongoTemplate.remove(query, Product.class);
 
     }
 }
