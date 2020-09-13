@@ -3,6 +3,7 @@ package com.citi.group12.dao;
 import com.citi.group12.entity.Investment;
 import com.citi.group12.entity.Product;
 
+import java.util.Date;
 import java.util.List;
 
 public interface ProductDao {
@@ -12,7 +13,11 @@ public interface ProductDao {
 
     List<Product> findAll();
 
-    Product findOne(String id);
+    Product findOneById(String id);
+
+    Product findOneBySymbolAndDate(String symbol, Date date);
+
+    List<Product> getProductBySymbolAndDateInterval(String symbol, Date startDate, Date endDate);
 
     void delete(String id);
 
