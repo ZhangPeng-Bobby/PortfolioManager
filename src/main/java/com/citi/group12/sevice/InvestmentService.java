@@ -4,10 +4,12 @@ import com.citi.group12.dao.impl.InvestmentDaoImpl;
 import com.citi.group12.dao.impl.ProductDaoImpl;
 import com.citi.group12.entity.Investment;
 import com.citi.group12.entity.PriceType;
+import com.citi.group12.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.function.DoubleToLongFunction;
 
 @Service
 public class InvestmentService {
@@ -29,21 +31,10 @@ public class InvestmentService {
         investmentDao.delete(id);
     }
 
-    //Get everyday investment value between specific date
+
     public Map<Date, Double> getInvestmentVal(Date startDate, Date endDate) {
         Map<Date, Double> specificDaysInvestmentValue = new HashMap<>();
-
-        //Following is going to get all dates between the given date
-        //Calendar used for adding one day to a date
-        List<Date> dates = new ArrayList<>();
-        Date tempDate = startDate;
-        Calendar calendar = Calendar.getInstance();
-        do {
-            dates.add(tempDate);
-            calendar.setTime(tempDate);
-            calendar.add(Calendar.DATE, 1);
-            tempDate = calendar.getTime();
-        } while (tempDate.before(endDate));
+        List<Date> dates = new DateUtil().getAllDatesBetweenGiven(startDate, endDate);
 
         for (Date date : dates) {
             specificDaysInvestmentValue.put(date, getSpecificDayInvestmentValue(date));
@@ -52,13 +43,13 @@ public class InvestmentService {
         return specificDaysInvestmentValue;
     }
 
-    private Double getSpecificDayInvestmentValue(Date date) {
+    private double getSpecificDayInvestmentValue(Date date) {
         double value = 0.0;
         //todo use stream to optimise this
         List<Investment> investments = investmentDao.findAll();
         for (Investment investment : investments
         ) {
-            double closePrice=productDao.findOneBySymbolAndTypeAndDate(investment.getSymbol(), PriceType.CLOSE,date).getPrice();
+            double closePrice = productDao.findOneBySymbolAndTypeAndDate(investment.getSymbol(), PriceType.CLOSE, date).getPrice();
 //            Double closePrice =  Arrays.stream(productDao
 //                    .findOneBySymbolAndDate
 //                            (investment.getSymbol(), date)
@@ -67,7 +58,7 @@ public class InvestmentService {
 //                    .findFirst()
 //                    .get()
 //                    .getPrice();
-            value += investment.getShare()*closePrice;
+            value += investment.getShare() * closePrice;
         }
         return value;
     }

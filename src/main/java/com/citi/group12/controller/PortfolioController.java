@@ -1,11 +1,6 @@
 package com.citi.group12.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.citi.group12.entity.Investment;
 import com.citi.group12.entity.Portfolio;
-import com.citi.group12.entity.Product;
 import com.citi.group12.sevice.InvestmentService;
 import com.citi.group12.sevice.PortfolioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +8,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @CrossOrigin
@@ -36,8 +30,8 @@ public class PortfolioController {
         return null;
     }
 
-    @GetMapping(value = "/cashVal")
-    public Map<Date, Double> getCashValue(@RequestParam Date start, @RequestParam Date end) {
+    @GetMapping(value = "/cashVal", produces = {"application/json"})
+    public Map<Date, Double> getCashValue(@RequestParam(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date start, @RequestParam(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date end) {
         return null;
     }
 

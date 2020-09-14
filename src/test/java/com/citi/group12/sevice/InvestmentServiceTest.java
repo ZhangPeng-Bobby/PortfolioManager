@@ -35,7 +35,6 @@ class InvestmentServiceTest {
         product1.setDate(date);
         product1.setType(PriceType.CLOSE);
         product1.setPrice(101.11);
-
     }
 
     @Test
