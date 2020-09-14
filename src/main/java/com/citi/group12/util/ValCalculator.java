@@ -1,4 +1,4 @@
-package com.citi.group12.utils;
+package com.citi.group12.util;
 
 public class ValCalculator {
 }
