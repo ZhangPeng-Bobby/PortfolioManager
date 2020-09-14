@@ -1,7 +1,6 @@
 package com.citi.group12.sevice;
 
 import com.citi.group12.dao.impl.ProductDaoImpl;
-import com.citi.group12.entity.Price;
 import com.citi.group12.entity.PriceType;
 import com.citi.group12.entity.Product;
 import org.junit.jupiter.api.BeforeEach;

@@ -19,16 +19,8 @@ public class Product implements Serializable {
 
     private String symbol;
     private Date date;
-    private Price[] prices = new Price[2];
-
-    public Price[] getPrices() {
-        return prices;
-    }
-
-    public void setPrices(Price[] prices) {
-        this.prices = prices;
-    }
-
+    private PriceType type;
+    private double price;
 
     public String getId() {
         return id;
@@ -55,4 +47,19 @@ public class Product implements Serializable {
     }
 
 
+    public PriceType getType() {
+        return type;
+    }
+
+    public void setType(PriceType type) {
+        this.type = type;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
 }

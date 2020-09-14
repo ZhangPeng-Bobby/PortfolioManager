@@ -1,9 +1,6 @@
 package com.citi.group12.dao.impl;
 
-import com.citi.group12.dao.InvestmentDao;
 import com.citi.group12.dao.ProductDao;
-import com.citi.group12.entity.Investment;
-import com.citi.group12.entity.Price;
 import com.citi.group12.entity.PriceType;
 import com.citi.group12.entity.Product;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,12 +32,8 @@ class ProductDaoImplTest {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date = sdf.parse("2020-09-13");
         product1.setDate(date);
-        Price priceO = new Price(PriceType.OPEN, 300);
-        Price priceC = new Price(PriceType.CLOSE, 309);
-        Price[] prices = new Price[2];
-        prices[0] = priceO;
-        prices[1] = priceC;
-        product1.setPrices(prices);
+        product1.setType(PriceType.CLOSE);
+        product1.setPrice(101.11);
 
     }
 
@@ -68,7 +61,7 @@ class ProductDaoImplTest {
     @Test
     void findOneBySymbolAndDate() {
         productDao.save(product1);
-        assertNotNull(productDao.findOneBySymbolAndDate(product1.getSymbol(),product1.getDate()));
+        assertNotNull(productDao.findBySymbolAndDate(product1.getSymbol(),product1.getDate()));
         productDao.delete(product1.getId());
     }
 }

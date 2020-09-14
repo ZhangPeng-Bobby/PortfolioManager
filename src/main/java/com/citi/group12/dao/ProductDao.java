@@ -1,6 +1,7 @@
 package com.citi.group12.dao;
 
 import com.citi.group12.entity.Investment;
+import com.citi.group12.entity.PriceType;
 import com.citi.group12.entity.Product;
 
 import java.util.Date;
@@ -15,7 +16,11 @@ public interface ProductDao {
 
     Product findOneById(String id);
 
-    Product findOneBySymbolAndDate(String symbol, Date date);
+    List<Product> findBySymbolAndDate(String symbol, Date date);
+
+    List<Product> findBySymbolAndType(String symbol, PriceType type);
+
+    Product findOneBySymbolAndTypeAndDate(String symbol, PriceType type,Date date);
 
     List<Product> getProductBySymbolAndDateInterval(String symbol, Date startDate, Date endDate);
 

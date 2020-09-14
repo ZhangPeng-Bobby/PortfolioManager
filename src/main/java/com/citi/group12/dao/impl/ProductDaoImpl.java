@@ -2,6 +2,7 @@ package com.citi.group12.dao.impl;
 
 import com.citi.group12.dao.ProductDao;
 import com.citi.group12.entity.Investment;
+import com.citi.group12.entity.PriceType;
 import com.citi.group12.entity.Product;
 import com.mongodb.client.result.UpdateResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class ProductDaoImpl implements ProductDao {
         //修改的内容
         Update update = new Update();
         update.set("symbol", product.getSymbol()).set("date", product.getDate())
-                .set("price", product.getPrices());
+                .set("type",product.getType()).set("price", product.getPrice());
 
         //更新查询返回结果集的第一条
         UpdateResult result = mongoTemplate.updateFirst(query, update, Investment.class);
@@ -54,9 +55,24 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public Product findOneBySymbolAndDate(String symbol, Date date) {
+    public List<Product> findBySymbolAndDate(String symbol, Date date) {
         Criteria criteria = new Criteria();
-        return mongoTemplate.findOne(new Query(criteria.andOperator(Criteria.where("symbol").is(symbol), Criteria.where("date").gte(date), Criteria.where("date").lte(date))), Product.class);
+        return mongoTemplate.find(new Query(criteria.andOperator(Criteria.where("symbol").is(symbol), Criteria.where("date").gte(date), Criteria.where("date").lte(date))), Product.class);
+    }
+
+    @Override
+    public List<Product> findBySymbolAndType(String symbol, PriceType type) {
+        Criteria criteria = new Criteria();
+        return mongoTemplate.find(new Query(criteria.andOperator(Criteria.where("symbol").is(symbol), Criteria.where("type").is(type))),Product.class);
+    }
+
+    @Override
+    public Product findOneBySymbolAndTypeAndDate(String symbol, PriceType type, Date date) {
+        Criteria c1=Criteria.where("symbol").is(symbol);
+        Criteria c2=Criteria.where("type").is(type);
+        Criteria c3=Criteria.where("date").is(date);
+        return mongoTemplate.findOne(new Query(new Criteria().andOperator(c1,c2,c3)),Product.class);
+
     }
 
     @Override
