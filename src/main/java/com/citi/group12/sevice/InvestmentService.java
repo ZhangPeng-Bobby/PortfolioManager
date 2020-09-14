@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.function.DoubleToLongFunction;
 
 @Service
 public class InvestmentService {
@@ -48,7 +47,7 @@ public class InvestmentService {
         //todo use stream to optimise this
         List<Investment> investments = investmentDao.findAll();
         for (Investment investment : investments
-        ) {
+        ) {//todo there is a bug, if product for that date does not exist
             double closePrice = productDao.findOneBySymbolAndTypeAndDate(investment.getSymbol(), PriceType.CLOSE, date).getPrice();
 //            Double closePrice =  Arrays.stream(productDao
 //                    .findOneBySymbolAndDate
