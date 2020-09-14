@@ -1,10 +1,15 @@
 package com.citi.group12.controller;
 
 import com.citi.group12.entity.Investment;
+import com.citi.group12.entity.Product;
 import com.citi.group12.sevice.InvestmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -19,7 +24,13 @@ public class InvestmentController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping(value = "/{id}",produces = {"application/json"})
+    @GetMapping(produces = {"application/json"})
+    public ResponseEntity<Collection<Investment>> getAllInvestment() {
+        List<Investment> investments = investmentService.getAllInvestment();
+        return ResponseEntity.ok().body(investments);
+    }
+
+    @PostMapping(value = "/{id}", produces = {"application/json"})
     public ResponseEntity deleteAnInvestment(@PathVariable String id) {
         investmentService.deleteInvestmentById(id);
         return ResponseEntity.ok().build();
