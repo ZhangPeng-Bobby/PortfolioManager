@@ -2,6 +2,7 @@ package com.citi.group12.dao.impl;
 
 import com.citi.group12.dao.InvestmentDao;
 import com.citi.group12.entity.Investment;
+import com.citi.group12.entity.PortType;
 import com.mongodb.client.result.UpdateResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -52,6 +53,11 @@ public class InvestmentDaoImpl implements InvestmentDao {
     @Override
     public Investment findOne(String id) {
         return mongoTemplate.findOne(new Query(Criteria.where("id").is(id)), Investment.class);
+    }
+
+    @Override
+    public List<Investment> findByType(PortType type) {
+        return mongoTemplate.find(new Query(Criteria.where("type").is(type)), Investment.class);
     }
 
     @Override

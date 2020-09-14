@@ -1,6 +1,7 @@
 package com.citi.group12.dao;
 
 import com.citi.group12.entity.Investment;
+import com.citi.group12.entity.PortType;
 import com.citi.group12.entity.PriceType;
 import com.citi.group12.entity.Product;
 
@@ -15,6 +16,8 @@ public interface ProductDao {
     List<Product> findAll();
 
     Product findOneById(String id);
+
+    List<Product> findBySymbol(String symbol);
 
     List<Product> findBySymbolAndDate(String symbol, Date date);
 

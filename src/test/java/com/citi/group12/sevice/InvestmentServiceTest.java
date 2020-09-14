@@ -33,12 +33,8 @@ class InvestmentServiceTest {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date = sdf.parse("2020-09-13");
         product1.setDate(date);
-        Price priceO = new Price(PriceType.OPEN, 300);
-        Price priceC = new Price(PriceType.CLOSE, 309);
-        Price[] prices = new Price[2];
-        prices[0] = priceO;
-        prices[1] = priceC;
-        product1.setPrices(prices);
+        product1.setType(PriceType.CLOSE);
+        product1.setPrice(101.11);
 
     }
 

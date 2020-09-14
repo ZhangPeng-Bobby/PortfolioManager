@@ -1,5 +1,8 @@
 package com.citi.group12.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,12 +20,20 @@ public class Investment implements Serializable {
     private String id;
 
     private String symbol;
+
     private String name;
+
     private PortType type;
+
+    @JsonProperty("purchase_date")
     private Date purchasedDate;
+
     private int share;
+
     private double purchasedPrice;
+
     private String exchange;
+
 
     public String getId() {
         return id;

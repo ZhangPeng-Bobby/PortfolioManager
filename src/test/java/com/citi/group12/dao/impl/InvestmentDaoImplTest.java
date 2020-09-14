@@ -10,9 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -25,15 +26,17 @@ class InvestmentDaoImplTest {
 
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws ParseException {
         investment1=new Investment();
-        investment1.setName("APPLE");
-        investment1.setSymbol("APPL");
-        investment1.setType(PortType.BOND);
-        investment1.setPurchasedDate(new Date());
-        investment1.setShare(100);
-        investment1.setPurchasedPrice(364.10);
-        investment1.setExchange("NY Exchange");
+        investment1.setName("Gold Dec 20");
+        investment1.setSymbol("GC=F");
+        investment1.setType(PortType.FUTURE);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = sdf.parse("2020-08-25");
+        investment1.setPurchasedDate(date);
+        investment1.setShare(10);
+        investment1.setPurchasedPrice(1925);
+        investment1.setExchange("NasdaqGS");
     }
 
     @Test
@@ -47,6 +50,8 @@ class InvestmentDaoImplTest {
 
     @Test
     void findAll() {
+        List<Investment> investments=investmentDao.findAll();
+        System.out.println(investments.toString());
     }
 
     @Test

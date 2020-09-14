@@ -1,6 +1,11 @@
 package com.citi.group12.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.citi.group12.entity.Investment;
+import com.citi.group12.entity.Portfolio;
+import com.citi.group12.entity.Product;
 import com.citi.group12.sevice.InvestmentService;
 import com.citi.group12.sevice.PortfolioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +13,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @CrossOrigin
 @RestController
@@ -24,8 +27,8 @@ public class PortfolioController {
     InvestmentService investmentService;
 
     @GetMapping(value = "/all", produces = {"application/json"})
-    public ResponseEntity<Collection<Investment>> getAllPortfolio() {
-        return ResponseEntity.ok().body(portfolioService.getAllInvestment());
+    public ResponseEntity<List<Portfolio>> getAllPortfolio() {
+        return ResponseEntity.ok().body(portfolioService.getAllPortfolio());
     }
 
     @GetMapping(value = "/netVal")

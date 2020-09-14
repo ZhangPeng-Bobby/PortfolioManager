@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.function.DoubleToLongFunction;
 
 @Service
 public class InvestmentService {
@@ -54,12 +53,12 @@ public class InvestmentService {
     }
 
     private Double getSpecificDayInvestmentValue(Date date) {
-        Double value = 0.0;
+        double value = 0.0;
         //todo use stream to optimise this
         List<Investment> investments = investmentDao.findAll();
         for (Investment investment : investments
         ) {
-            Double closePrice=productDao.findOneBySymbolAndTypeAndDate(investment.getSymbol(), PriceType.CLOSE,date).getPrice();
+            double closePrice=productDao.findOneBySymbolAndTypeAndDate(investment.getSymbol(), PriceType.CLOSE,date).getPrice();
 //            Double closePrice =  Arrays.stream(productDao
 //                    .findOneBySymbolAndDate
 //                            (investment.getSymbol(), date)
