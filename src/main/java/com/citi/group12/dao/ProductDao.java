@@ -19,6 +19,8 @@ public interface ProductDao {
 
     List<Product> findBySymbol(String symbol);
 
+    List<Product> findByType(String symbol);
+
     List<Product> findBySymbolAndDate(String symbol, Date date);
 
     List<Product> findBySymbolAndType(String symbol, PriceType type);
