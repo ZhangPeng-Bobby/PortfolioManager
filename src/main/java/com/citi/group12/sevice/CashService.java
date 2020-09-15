@@ -7,6 +7,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Log4j2
@@ -19,27 +20,23 @@ public class CashService {
         this.cashDao = cashDao;
     }
 
-    public Map<Date, Double> getCashVal(Date startDate, Date endDate) {
-        Map<Date, Double> specificDaysCashValue = new LinkedHashMap<>();
+    public Map<String, Double> getCashVal(Date startDate, Date endDate) {
+        Map<String, Double> specificDaysCashValue = new LinkedHashMap<>();
+
         List<Date> dates = new DateUtil().getAllDatesBetweenGiven(startDate, endDate);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         log.info("getting cash value, the dates are: " + dates);
 
-        for (Date date : dates) {
-            specificDaysCashValue.put(date, getSpecificDayCashValue(date));
-        }
 
+        List<Cash> cashList = cashDao.findByDateInterval(startDate, endDate);
+
+        for (int i = 0; i < dates.size(); i++) {
+            if (i < cashList.size() && cashList.get(i) != null) {
+                specificDaysCashValue.put(sdf.format(dates.get(i)), cashList.get(i).getBalance());
+            } else {
+                specificDaysCashValue.put(sdf.format(dates.get(i)), 0.0);
+            }
+        }
         return specificDaysCashValue;
-    }
-
-    private double getSpecificDayCashValue(Date date) {
-        double value = 0;
-        List<Cash> cashList = cashDao.findAll();
-        log.info("calculating " + date + " cash value, all cash is " + cashList);
-        for (Cash cash : cashList
-        ) {
-            value += cash.getBalance();
-        }
-
-        return value;
     }
 }

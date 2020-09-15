@@ -32,13 +32,18 @@ public class PortfolioController {
     }
 
     @GetMapping(value = "/netVal", produces = {"application/json"})
-    public ResponseEntity<Map<Date, Double>> getNetValue(@RequestParam(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date start, @RequestParam(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date end) {
+    public ResponseEntity<Map<String, Double>> getNetValue(@RequestParam(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date start, @RequestParam(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date end) {
         log.info("the date input is " + start + " and " + end);
-        return ResponseEntity.ok().body(null);
+        Map<String, Double> cashVal = cashService.getCashVal(start, end);
+        Map<String, Double> netVal = investmentService.getInvestmentVal(start, end);
+
+        cashVal.forEach((key,value) -> netVal.merge(key,value,Double::sum));
+
+        return ResponseEntity.ok().body(netVal);
     }
 
     @GetMapping(value = "/cashVal", produces = {"application/json"})
-    public ResponseEntity<Map<Date, Double>> getCashValue(@RequestParam(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date start, @RequestParam(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date end) {
+    public ResponseEntity<Map<String, Double>> getCashValue(@RequestParam(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date start, @RequestParam(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date end) {
         log.info("the date input is " + start + " and " + end);
         return ResponseEntity.ok().body(cashService.getCashVal(start, end));
     }

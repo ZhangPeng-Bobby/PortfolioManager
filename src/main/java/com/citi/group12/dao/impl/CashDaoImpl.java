@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -44,6 +45,13 @@ public class CashDaoImpl implements CashDao {
     @Override
     public Cash findOne(String id) {
         return mongoTemplate.findOne(new Query(Criteria.where("id").is(id)), Cash.class);
+    }
+
+    @Override
+    public List<Cash> findByDateInterval(Date startDate, Date endDate) {
+        Criteria c1 = Criteria.where("date").gte(startDate);
+        Criteria c2 = Criteria.where("date").lte(endDate);
+        return mongoTemplate.find(new Query(new Criteria().andOperator(c1, c2)), Cash.class);
     }
 
     @Override

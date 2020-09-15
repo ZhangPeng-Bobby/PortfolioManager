@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Date;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
@@ -25,6 +27,7 @@ class CashDaoImplTest {
         cash.setBalance(504.5);
         cash.setName("bankSaving");
         cash.setType("checking");
+        cash.setDate(new Date());
     }
 
     @Test
