@@ -19,7 +19,9 @@ public interface ProductDao {
 
     List<Product> findBySymbol(String symbol);
 
-    List<Product> findByType(String symbol);
+    List<Product> findByType(String type);
+
+    List<Product> findByPortType(String portType);
 
     List<Product> findBySymbolAndDate(String symbol, Date date);
 

@@ -6,9 +6,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 @Log4j2
 @CrossOrigin
@@ -24,10 +23,10 @@ public class ProductController {
     }
 
     @GetMapping(value = "/{type}", produces = {"application/json"})
-    public ResponseEntity<List<Product>> getProductsByType(@PathVariable String type) {
+    public ResponseEntity<Map<String,String>> getProductsByType(@PathVariable String type) {
         log.info(type + "is the type you want to get");
         if(type != null){
-            return ResponseEntity.ok().body(productService.getProductByType(type));
+            return ResponseEntity.ok().body(productService.getProductByPortType(type));
         }
         return ResponseEntity.badRequest().build();
     }

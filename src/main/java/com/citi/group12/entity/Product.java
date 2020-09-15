@@ -18,7 +18,9 @@ public class Product implements Serializable {
     private String id;
 
     private String symbol;
+    private String name;
     private Date date;
+    private PortType portType;
     private PriceType type;
     private double price;
 
@@ -61,5 +63,21 @@ public class Product implements Serializable {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public PortType getPortType() {
+        return portType;
+    }
+
+    public void setPortType(PortType portType) {
+        this.portType = portType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

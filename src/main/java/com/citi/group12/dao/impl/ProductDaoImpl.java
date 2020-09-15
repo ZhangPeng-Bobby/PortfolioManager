@@ -2,6 +2,7 @@ package com.citi.group12.dao.impl;
 
 import com.citi.group12.dao.ProductDao;
 import com.citi.group12.entity.Investment;
+import com.citi.group12.entity.PortType;
 import com.citi.group12.entity.PriceType;
 import com.citi.group12.entity.Product;
 import com.mongodb.client.result.UpdateResult;
@@ -35,7 +36,7 @@ public class ProductDaoImpl implements ProductDao {
         //修改的内容
         Update update = new Update();
         update.set("symbol", product.getSymbol()).set("date", product.getDate())
-                .set("type",product.getType()).set("price", product.getPrice());
+                .set("type",product.getType()).set("price", product.getPrice()).set("name",product.getName());
 
         //更新查询返回结果集的第一条
         UpdateResult result = mongoTemplate.updateFirst(query, update, Investment.class);
@@ -62,6 +63,11 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public List<Product> findByType(String type) {
         return mongoTemplate.find(new Query(Criteria.where("type").is(type)), Product.class);
+    }
+
+    @Override
+    public List<Product> findByPortType(String portType) {
+        return mongoTemplate.find(new Query(Criteria.where("portType").is(portType)), Product.class);
     }
 
 
