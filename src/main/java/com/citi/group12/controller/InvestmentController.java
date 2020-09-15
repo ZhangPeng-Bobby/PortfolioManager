@@ -3,14 +3,17 @@ package com.citi.group12.controller;
 import com.citi.group12.entity.Investment;
 import com.citi.group12.entity.Product;
 import com.citi.group12.sevice.InvestmentService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
 
+@Log4j2
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/investment")
