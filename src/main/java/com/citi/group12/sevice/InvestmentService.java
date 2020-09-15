@@ -61,11 +61,11 @@ public class InvestmentService {
         ) {
             log.info("date before sdf transfer: " + date);
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-            log.info("default: "+date);
-            TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-            log.info("UTC:  "+date);
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//            sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+//            log.info("default: "+date);
+//            TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+//            log.info("UTC:  "+date);
 
 //            String time = sdf.format(date);
 //            Date magicDate = sdf.parse(time);
