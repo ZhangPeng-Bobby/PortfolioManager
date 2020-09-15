@@ -1,6 +1,7 @@
 package com.citi.group12.dao.impl;
 
 import com.citi.group12.dao.ProductDao;
+import com.citi.group12.entity.PortType;
 import com.citi.group12.entity.PriceType;
 import com.citi.group12.entity.Product;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,10 +33,11 @@ class ProductDaoImplTest {
         product1 = new Product();
         product1.setSymbol("TSLA");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = sdf.parse("2020-08-25");
+        Date date = sdf.parse("2020-09-15");
         product1.setDate(date);
+        product1.setPortType(PortType.STOCK);
         product1.setType(PriceType.DIVIDEND);
-        product1.setPrice(10);
+        product1.setPrice(1705);
 
     }
 
@@ -102,5 +104,15 @@ class ProductDaoImplTest {
 
     @Test
     void getProductBySymbolAndDateInterval() {
+    }
+
+    @Test
+    void findByType() {
+    }
+
+    @Test
+    void findByPortType() {
+        List<Product> products=productDao.findByPortType(PortType.STOCK.toString());
+        assertNotNull(products);
     }
 }
