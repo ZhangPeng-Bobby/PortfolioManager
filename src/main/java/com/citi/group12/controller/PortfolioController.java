@@ -45,7 +45,7 @@ public class PortfolioController {
 
 
     @GetMapping(value = "/investmentVal", produces = {"application/json"})
-    public ResponseEntity<Map<Date, Double>> getInvestmentValue(@RequestParam(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date start, @RequestParam(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date end) {
+    public ResponseEntity<Map<String, Double>> getInvestmentValue(@RequestParam(value = "startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date start, @RequestParam(value = "endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date end) {
         log.info("start date is " + start + ", end date is " + end);
         return ResponseEntity.ok().body(investmentService.getInvestmentVal(start, end));
     }

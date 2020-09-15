@@ -25,14 +25,12 @@ public class Investment implements Serializable {
 
     private PortType type;
 
-    @JsonProperty("purchase_date")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
     private Date purchasedDate;
 
     private int share;
 
     private double purchasedPrice;
-
-    private String exchange;
 
 
     public String getId() {
@@ -91,11 +89,5 @@ public class Investment implements Serializable {
         this.name = name;
     }
 
-    public String getExchange() {
-        return exchange;
-    }
 
-    public void setExchange(String exchange) {
-        this.exchange = exchange;
-    }
 }

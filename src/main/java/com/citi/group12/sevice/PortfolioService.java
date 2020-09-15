@@ -39,7 +39,8 @@ public class PortfolioService {
             if(p!=null){
                 portfolio.setCurrentPrice(p.getPrice());
             }else {
-                break;
+                portfolios.add(portfolio);
+                continue;
             }
             portfolio.setCurrentValue(portfolio.getCurrentPrice()*portfolio.getShares());
             List<Product> dividends=getStockDividendValue(i);
@@ -65,10 +66,10 @@ public class PortfolioService {
 
     public Product getInvestmentLiveValue(Investment investment) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//        Date d=new Date();
-//        String time=sdf.format(d);
-//        Date date = sdf.parse(time);
-        Date date = sdf.parse("2020-09-14");
+        Date d=new Date();
+        String time=sdf.format(d);
+        Date date = sdf.parse(time);
+        //Date date = sdf.parse("2020-09-14");
         return productDao.findOneBySymbolAndTypeAndDate(investment.getSymbol(), PriceType.OPEN,date);
     }
 

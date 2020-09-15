@@ -33,8 +33,7 @@ public class InvestmentDaoImpl implements InvestmentDao {
         Update update = new Update();
         update.set("symbol",investment.getSymbol()).set("name",investment.getName())
                 .set("type",investment.getType()).set("purchasedDate",investment.getPurchasedDate())
-                .set("share",investment.getShare()).set("purchasedPrice",investment.getPurchasedPrice())
-                .set("exchange",investment.getExchange());
+                .set("share",investment.getShare()).set("purchasedPrice",investment.getPurchasedPrice());
 
         //更新查询返回结果集的第一条
         UpdateResult result =mongoTemplate.updateFirst(query,update,Investment.class);

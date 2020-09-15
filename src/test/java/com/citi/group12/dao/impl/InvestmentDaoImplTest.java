@@ -36,7 +36,6 @@ class InvestmentDaoImplTest {
         investment1.setPurchasedDate(date);
         investment1.setShare(10);
         investment1.setPurchasedPrice(1925);
-        investment1.setExchange("NasdaqGS");
     }
 
     @Test

@@ -10,6 +10,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Log4j2
@@ -38,12 +39,13 @@ public class InvestmentService {
     }
 
 
-    public Map<Date, Double> getInvestmentVal(Date startDate, Date endDate) {
-        Map<Date, Double> specificDaysInvestmentValue = new HashMap<>();
+    public Map<String, Double> getInvestmentVal(Date startDate, Date endDate) {
+        Map<String, Double> specificDaysInvestmentValue = new HashMap<>();
         List<Date> dates = new DateUtil().getAllDatesBetweenGiven(startDate, endDate);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         log.info("the dates between the given interval is:" + dates);
         for (Date date : dates) {
-            specificDaysInvestmentValue.put(date, getSpecificDayInvestmentValue(date));
+            specificDaysInvestmentValue.put(sdf.format(date), getSpecificDayInvestmentValue(date));
         }
 
         return specificDaysInvestmentValue;

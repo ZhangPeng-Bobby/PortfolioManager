@@ -20,6 +20,9 @@ public class InvestmentController {
 
     @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity addNewInvestment(@RequestBody Investment investment) {
+        if(investment.getPurchasedDate()==null){
+            return ResponseEntity.status(406).build();
+        }
         investmentService.addNewInvestment(investment);
         return ResponseEntity.ok().build();
     }
