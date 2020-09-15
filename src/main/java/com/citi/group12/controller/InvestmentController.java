@@ -23,7 +23,7 @@ public class InvestmentController {
 
     @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity addNewInvestment(@RequestBody Investment investment) {
-        if(investment.getPurchasedDate()==null){
+        if (investment.getPurchasedDate() == null) {
             return ResponseEntity.status(406).build();
         }
         investmentService.addNewInvestment(investment);
@@ -38,6 +38,7 @@ public class InvestmentController {
 
     @PostMapping(value = "/{id}", produces = {"application/json"})
     public ResponseEntity deleteAnInvestment(@PathVariable String id) {
+        log.info("id you want to delete is " + id);
         investmentService.deleteInvestmentById(id);
         return ResponseEntity.ok().build();
     }

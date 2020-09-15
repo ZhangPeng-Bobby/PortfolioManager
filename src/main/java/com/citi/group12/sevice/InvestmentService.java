@@ -62,12 +62,16 @@ public class InvestmentService {
             log.info("date before sdf transfer: " + date);
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String time = sdf.format(date);
-            Date magicDate = sdf.parse(time);
+            sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+            log.info("default: "+date);
+            TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+            log.info("UTC:  "+date);
 
-            log.info("date after transfer: " + magicDate);
-//            Product specificDateProduct = getInvestmentCloseProduct(investment);
-            Product specificDateProduct = productDao.findOneBySymbolAndTypeAndDate(investment.getSymbol(), PriceType.CLOSE, magicDate);
+//            String time = sdf.format(date);
+//            Date magicDate = sdf.parse(time);
+//
+//            log.info("date after transfer: " + magicDate);
+            Product specificDateProduct = productDao.findOneBySymbolAndTypeAndDate(investment.getSymbol(), PriceType.CLOSE, date);
 
             log.info("getting investment value, the date " + date + " product is " + specificDateProduct);
 
@@ -80,14 +84,5 @@ public class InvestmentService {
             value += investment.getShare() * closePrice;
         }
         return value;
-    }
-
-    private Product getInvestmentCloseProduct(Investment investment) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date d = new Date();
-        String time = sdf.format(d);
-        Date date = sdf.parse(time);
-        //Date date = sdf.parse("2020-09-14");
-        return productDao.findOneBySymbolAndTypeAndDate(investment.getSymbol(), PriceType.CLOSE, date);
     }
 }
