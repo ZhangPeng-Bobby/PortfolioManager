@@ -7,10 +7,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Log4j2
 @Service
@@ -23,7 +20,7 @@ public class CashService {
     }
 
     public Map<Date, Double> getCashVal(Date startDate, Date endDate) {
-        Map<Date, Double> specificDaysCashValue = new HashMap<>();
+        Map<Date, Double> specificDaysCashValue = new LinkedHashMap<>();
         List<Date> dates = new DateUtil().getAllDatesBetweenGiven(startDate, endDate);
         log.info("getting cash value, the dates are: " + dates);
 

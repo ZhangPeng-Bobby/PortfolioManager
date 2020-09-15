@@ -16,7 +16,7 @@ public class DateUtil {
             calendar.setTime(tempDate);
             calendar.add(Calendar.DATE, 1);
             tempDate = calendar.getTime();
-        } while (tempDate.before(endDate));
+        } while (!tempDate.after(endDate));
 
         return dates;
     }
