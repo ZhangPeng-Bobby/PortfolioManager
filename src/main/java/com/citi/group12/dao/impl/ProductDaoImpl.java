@@ -59,6 +59,11 @@ public class ProductDaoImpl implements ProductDao {
         return mongoTemplate.find(new Query(Criteria.where("symbol").is(symbol)), Product.class);
     }
 
+    @Override
+    public List<Product> findByType(String type) {
+        return mongoTemplate.find(new Query(Criteria.where("type").is(type)), Product.class);
+    }
+
 
     @Override
     public List<Product> findBySymbolAndDate(String symbol, Date date) {
