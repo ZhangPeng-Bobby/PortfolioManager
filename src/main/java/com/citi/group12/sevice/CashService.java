@@ -30,13 +30,18 @@ public class CashService {
 
         List<Cash> cashList = cashDao.findByDateInterval(startDate, endDate);
 
-        for (int i = 0; i < dates.size(); i++) {
-            if (i < cashList.size() && cashList.get(i) != null) {
-                specificDaysCashValue.put(sdf.format(dates.get(i)), cashList.get(i).getBalance());
-            } else {
-                specificDaysCashValue.put(sdf.format(dates.get(i)), 0.0);
+        for (Date date : dates
+        ) {
+            String specificDate = sdf.format(date);
+            for (Cash cash : cashList
+            ) {
+                if(specificDate.equals(sdf.format(cash.getDate()))){
+                    specificDaysCashValue.put(specificDate, cash.getBalance());
+                    break;
+                }
             }
         }
+
         return specificDaysCashValue;
     }
 }
