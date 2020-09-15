@@ -6,10 +6,12 @@ import com.citi.group12.entity.Investment;
 import com.citi.group12.entity.PriceType;
 import com.citi.group12.entity.Product;
 import com.citi.group12.util.DateUtil;
+import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -38,7 +40,6 @@ public class InvestmentService {
         investmentDao.delete(id);
     }
 
-
     public Map<String, Double> getInvestmentVal(Date startDate, Date endDate) {
         Map<String, Double> specificDaysInvestmentValue = new HashMap<>();
         List<Date> dates = new DateUtil().getAllDatesBetweenGiven(startDate, endDate);
@@ -51,14 +52,24 @@ public class InvestmentService {
         return specificDaysInvestmentValue;
     }
 
+    @SneakyThrows
     private double getSpecificDayInvestmentValue(Date date) {
         double value = 0.0;
 
         List<Investment> investments = investmentDao.findAll();
         for (Investment investment : investments
         ) {
-            Product specificDateProduct = productDao.findOneBySymbolAndTypeAndDate(investment.getSymbol(), PriceType.CLOSE, date);
-            log.info("getting investment value, the date "+ date + " product is "+ specificDateProduct);
+            log.info("date before sdf transfer: " + date);
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String time = sdf.format(date);
+            Date magicDate = sdf.parse(time);
+
+            log.info("date after transfer: " + magicDate);
+//            Product specificDateProduct = getInvestmentCloseProduct(investment);
+            Product specificDateProduct = productDao.findOneBySymbolAndTypeAndDate(investment.getSymbol(), PriceType.CLOSE, magicDate);
+
+            log.info("getting investment value, the date " + date + " product is " + specificDateProduct);
 
             double closePrice = 0;
 
@@ -71,4 +82,12 @@ public class InvestmentService {
         return value;
     }
 
+    private Product getInvestmentCloseProduct(Investment investment) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date d = new Date();
+        String time = sdf.format(d);
+        Date date = sdf.parse(time);
+        //Date date = sdf.parse("2020-09-14");
+        return productDao.findOneBySymbolAndTypeAndDate(investment.getSymbol(), PriceType.CLOSE, date);
+    }
 }
