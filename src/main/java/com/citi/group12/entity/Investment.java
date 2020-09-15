@@ -90,4 +90,16 @@ public class Investment implements Serializable {
     }
 
 
+    @Override
+    public String toString() {
+        return "Investment{" +
+                "id='" + id + '\'' +
+                ", symbol='" + symbol + '\'' +
+                ", name='" + name + '\'' +
+                ", type=" + type +
+                ", purchasedDate=" + purchasedDate +
+                ", share=" + share +
+                ", purchasedPrice=" + purchasedPrice +
+                '}';
+    }
 }

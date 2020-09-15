@@ -4,6 +4,7 @@ import com.citi.group12.dao.InvestmentDao;
 import com.citi.group12.entity.Investment;
 import com.citi.group12.entity.PortType;
 import com.mongodb.client.result.UpdateResult;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -11,8 +12,10 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
+import java.util.Calendar;
 import java.util.List;
 
+@Log4j2
 @Component
 public class InvestmentDaoImpl implements InvestmentDao {
 
@@ -21,6 +24,13 @@ public class InvestmentDaoImpl implements InvestmentDao {
 
     @Override
     public void save(Investment investment) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(investment.getPurchasedDate());
+        cal.add(Calendar.HOUR, 8);// 24小时制
+        investment.setPurchasedDate(cal.getTime());
+
+        log.info(investment);
+
         mongoTemplate.save(investment);
     }
 
