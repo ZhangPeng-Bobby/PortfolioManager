@@ -41,7 +41,7 @@ public class InvestmentService {
     }
 
     public Map<String, Double> getInvestmentVal(Date startDate, Date endDate) {
-        Map<String, Double> specificDaysInvestmentValue = new HashMap<>();
+        Map<String, Double> specificDaysInvestmentValue = new LinkedHashMap<>();
         List<Date> dates = new DateUtil().getAllDatesBetweenGiven(startDate, endDate);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         log.info("the dates between the given interval is:" + dates);
