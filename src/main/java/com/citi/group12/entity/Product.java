@@ -13,6 +13,7 @@ import java.util.Date;
  * dynamic data part for the portfolio
  */
 @Document(collection = "Products")
+@ToString
 public class Product implements Serializable {
     @Id
     private String id;
@@ -79,10 +80,5 @@ public class Product implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{}";
     }
 }
