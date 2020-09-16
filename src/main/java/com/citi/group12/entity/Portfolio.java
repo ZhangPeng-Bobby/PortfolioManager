@@ -151,4 +151,24 @@ public class Portfolio {
     public void setGainp(double gainp) {
         this.gainp = gainp;
     }
+
+    @Override
+    public String toString() {
+        return "Portfolio{" +
+                "id='" + id + '\'' +
+                ", symbol='" + symbol + '\'' +
+                ", name='" + name + '\'' +
+                ", type=" + type +
+                ", purchaseDate=" + purchaseDate +
+                ", shares=" + shares +
+                ", purchasePrice=" + purchasePrice +
+                ", cost=" + cost +
+                ", currentPrice=" + currentPrice +
+                ", currentValue=" + currentValue +
+                ", totalIncome=" + totalIncome +
+                ", netVal=" + netVal +
+                ", gain=" + gain +
+                ", gainp=" + gainp +
+                '}';
+    }
 }
