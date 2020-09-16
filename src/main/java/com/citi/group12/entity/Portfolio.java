@@ -2,9 +2,6 @@ package com.citi.group12.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.data.annotation.Id;
-import org.springframework.format.annotation.NumberFormat;
 
 import java.util.Date;
 
@@ -164,4 +161,26 @@ public class Portfolio {
     public void setGainPercent(double gainPercent) {
         this.gainPercent = gainPercent;
     }
+
+    @Override
+    public String toString() {
+        return "Portfolio{" +
+                "id='" + id + '\'' +
+                ", symbol='" + symbol + '\'' +
+                ", name='" + name + '\'' +
+                ", type=" + type +
+                ", purchaseDate=" + purchaseDate +
+                ", shares=" + shares +
+                ", purchasePrice=" + purchasePrice +
+                ", cost=" + cost +
+                ", currentPrice=" + currentPrice +
+                ", currentValue=" + currentValue +
+                ", totalIncome=" + totalIncome +
+                ", netVal=" + netVal +
+                ", gain=" + gain +
+                ", gainp=" + gainp +
+                '}';
+    }
+
+
 }

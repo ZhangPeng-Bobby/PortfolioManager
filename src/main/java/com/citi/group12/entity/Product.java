@@ -9,10 +9,10 @@ import java.util.Date;
 
 /**
  * created by Alex in 09/12/2020
- *
+ * <p>
  * dynamic data part for the portfolio
  */
-@Document(collection="Products")
+@Document(collection = "Products")
 public class Product implements Serializable {
     @Id
     private String id;
