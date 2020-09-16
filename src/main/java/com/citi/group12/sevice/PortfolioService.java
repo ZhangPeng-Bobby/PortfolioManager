@@ -10,7 +10,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -160,7 +159,7 @@ public class PortfolioService {
         if (groupedInvestment.get(type) != null) {
             groupedInvestment.get(type).add(toBeGroup);
         } else {
-            List<Investment> group = new ArrayList<Investment>();
+            List<Investment> group = new ArrayList<>();
             group.add(toBeGroup);
             groupedInvestment.put(type, group);
         }
