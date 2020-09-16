@@ -76,7 +76,7 @@ public class InvestmentService {
 
             log.info("getting investment value, the date " + date + " product is " + specificDateProduct);
 
-            double closePrice = 0;
+            double closePrice = investment.getPurchasedPrice();
 
             if (specificDateProduct != null) {
                 closePrice = specificDateProduct.getPrice();

@@ -41,8 +41,7 @@ public class PortfolioService {
             if (p != null) {
                 portfolio.setCurrentPrice(p.getPrice());
             } else {
-                portfolios.add(portfolio);
-                continue;
+                portfolio.setCurrentPrice(i.getPurchasedPrice());
             }
             portfolio.setCurrentValue(portfolio.getCurrentPrice() * portfolio.getShares());
             List<Product> dividends = getStockDividendValue(i);
