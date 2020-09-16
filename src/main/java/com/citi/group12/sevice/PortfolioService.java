@@ -24,6 +24,9 @@ public class PortfolioService {
     InvestmentService investmentService;
 
     @Autowired
+    CashService cashService;
+
+    @Autowired
     ProductDao productDao;
 
     @SneakyThrows
@@ -103,6 +106,30 @@ public class PortfolioService {
     }
 
     @SneakyThrows
+    public JSONArray getCashAndInvestmentValues() {
+        JSONArray jsonArray = new JSONArray();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = sdf.parse("2020-09-13"); //todo just demo, should create a current date
+
+        List<Investment> investments = investmentDao.findAll();
+        Double investmentVal = investmentService.getSpecificDayInvestmentValue(date, investments);
+        Double cashVal = cashService.getCashVal(date, date).get(sdf.format(date));
+
+        JSONObject jsonObject1 = new JSONObject();
+        jsonObject1.put("name", "Investment");
+        jsonObject1.put("value", investmentVal);
+
+        JSONObject jsonObject2 = new JSONObject();
+        jsonObject2.put("name", "Cash");
+        jsonObject2.put("value", cashVal);
+
+        jsonArray.add(jsonObject1);
+        jsonArray.add(jsonObject2);
+
+        return jsonArray;
+    }
+
+    @SneakyThrows
     public JSONArray getTypeValues() {
         JSONArray jsonArray = new JSONArray();
         List<Investment> investments = investmentDao.findAll();
@@ -164,6 +191,7 @@ public class PortfolioService {
             groupedInvestment.put(type, group);
         }
     }
+
 
 }
 

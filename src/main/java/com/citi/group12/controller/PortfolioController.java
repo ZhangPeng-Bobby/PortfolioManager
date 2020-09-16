@@ -61,4 +61,9 @@ public class PortfolioController {
         return ResponseEntity.ok().body(portfolioService.getTypeValues());
     }
 
+    @GetMapping(value = "/cashAndInvestmentVal", produces = {"application/json"})
+    public ResponseEntity<JSONArray> getCashAndInvestmentValues() {
+        return ResponseEntity.ok().body(portfolioService.getCashAndInvestmentValues());
+    }
+
 }
