@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
+import org.springframework.format.annotation.NumberFormat;
 
 import java.util.Date;
 
@@ -26,7 +27,11 @@ public class Portfolio {
 
     private double netVal;
     private double gain;
-    private double gainp;
+
+    @JsonIgnore
+    private double gainPercent;
+
+    private String gainp;
 
     public Portfolio(Investment investment){
         this.id=investment.getId();
@@ -144,11 +149,19 @@ public class Portfolio {
         this.gain = gain;
     }
 
-    public double getGainp() {
+    public String getGainp() {
         return gainp;
     }
 
-    public void setGainp(double gainp) {
+    public void setGainp(String gainp) {
         this.gainp = gainp;
+    }
+
+    public double getGainPercent() {
+        return gainPercent;
+    }
+
+    public void setGainPercent(double gainPercent) {
+        this.gainPercent = gainPercent;
     }
 }

@@ -10,6 +10,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -54,7 +55,10 @@ public class PortfolioService {
             portfolio.setTotalIncome(income);
             portfolio.setNetVal(portfolio.getCurrentValue() + income);
             portfolio.setGain(portfolio.getNetVal() - portfolio.getCost());
-            portfolio.setGainp(portfolio.getGain() / portfolio.getNetVal());
+            portfolio.setGainPercent(portfolio.getGain() / portfolio.getNetVal());
+            NumberFormat nf = NumberFormat.getPercentInstance();
+            nf.setMaximumFractionDigits(1);
+            portfolio.setGainp(nf.format(portfolio.getGainPercent()));
             portfolios.add(portfolio);
             log.info("they are : " + portfolio);
         }
@@ -69,7 +73,7 @@ public class PortfolioService {
         int end = Math.min(5, portfolioList.size());
         List<Portfolio> result = new ArrayList<>();
         for (int i = 0; i < end; i++) {
-            if (portfolioList.get(i).getGainp() > 0) {
+            if (portfolioList.get(i).getGainPercent() > 0) {
                 result.add(portfolioList.get(i));
             }
         }
@@ -82,7 +86,7 @@ public class PortfolioService {
         int end = Math.min(5, portfolioList.size());
         List<Portfolio> result = new ArrayList<>();
         for (int i = 0; i < end; i++) {
-            if (portfolioList.get(i).getGainp() < 0) {
+            if (portfolioList.get(i).getGainPercent() < 0) {
                 result.add(portfolioList.get(i));
             }
         }
@@ -197,7 +201,7 @@ public class PortfolioService {
 class sortTop implements Comparator {
 
     public int compare(Object o1, Object o2) {
-        if (((Portfolio) o1).getGainp() > ((Portfolio) o2).getGainp())
+        if (((Portfolio) o1).getGainPercent() > ((Portfolio) o2).getGainPercent())
             return -1;
         return 1;
     }
@@ -207,7 +211,7 @@ class sortTop implements Comparator {
 class sortBottom implements Comparator {
 
     public int compare(Object o1, Object o2) {
-        if (((Portfolio) o1).getGainp() > ((Portfolio) o2).getGainp())
+        if (((Portfolio) o1).getGainPercent() > ((Portfolio) o2).getGainPercent())
             return 1;
         return -1;
     }
