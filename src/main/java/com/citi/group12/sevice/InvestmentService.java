@@ -45,18 +45,19 @@ public class InvestmentService {
         List<Date> dates = new DateUtil().getAllDatesBetweenGiven(startDate, endDate);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         log.info("the dates between the given interval is:" + dates);
+
+        List<Investment> investments = investmentDao.findAll();
         for (Date date : dates) {
-            specificDaysInvestmentValue.put(sdf.format(date), getSpecificDayInvestmentValue(date));
+            specificDaysInvestmentValue.put(sdf.format(date), getSpecificDayInvestmentValue(date, investments));
         }
 
         return specificDaysInvestmentValue;
     }
 
     @SneakyThrows
-    private double getSpecificDayInvestmentValue(Date date) {
+    public double getSpecificDayInvestmentValue(Date date, List<Investment> investments) {
         double value = 0.0;
 
-        List<Investment> investments = investmentDao.findAll();
         for (Investment investment : investments
         ) {
             log.info("date before sdf transfer: " + date);

@@ -27,18 +27,22 @@ public class CashService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         log.info("getting cash value, the dates are: " + dates);
 
-
         List<Cash> cashList = cashDao.findByDateInterval(startDate, endDate);
 
         for (Date date : dates
         ) {
+            int flag = 0;
             String specificDate = sdf.format(date);
             for (Cash cash : cashList
             ) {
-                if(specificDate.equals(sdf.format(cash.getDate()))){
+                if (specificDate.equals(sdf.format(cash.getDate()))) {
                     specificDaysCashValue.put(specificDate, cash.getBalance());
+                    flag = 1;
                     break;
                 }
+            }
+            if (flag == 0) {
+                specificDaysCashValue.put(specificDate, 0.0);
             }
         }
 

@@ -1,5 +1,6 @@
 package com.citi.group12.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.citi.group12.entity.Portfolio;
 import com.citi.group12.sevice.CashService;
 import com.citi.group12.sevice.InvestmentService;
@@ -37,7 +38,7 @@ public class PortfolioController {
         Map<String, Double> cashVal = cashService.getCashVal(start, end);
         Map<String, Double> netVal = investmentService.getInvestmentVal(start, end);
 
-        cashVal.forEach((key,value) -> netVal.merge(key,value,Double::sum));
+        cashVal.forEach((key, value) -> netVal.merge(key, value, Double::sum));
 
         return ResponseEntity.ok().body(netVal);
     }
@@ -55,5 +56,9 @@ public class PortfolioController {
         return ResponseEntity.ok().body(investmentService.getInvestmentVal(start, end));
     }
 
+    @GetMapping(value = "/typeVal", produces = {"application/json"})
+    public ResponseEntity<JSONArray> getTypeValues() {
+        return ResponseEntity.ok().body(portfolioService.getTypeValues());
+    }
 
 }
