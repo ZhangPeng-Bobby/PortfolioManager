@@ -13,7 +13,6 @@ import java.util.Date;
  * dynamic data part for the portfolio
  */
 @Document(collection = "Products")
-@ToString
 public class Product implements Serializable {
     @Id
     private String id;
