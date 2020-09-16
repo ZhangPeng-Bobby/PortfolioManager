@@ -14,9 +14,7 @@ import org.springframework.stereotype.Service;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Log4j2
@@ -53,14 +51,40 @@ public class PortfolioService {
             portfolio.setTotalIncome(income);
             portfolio.setNetVal(portfolio.getCurrentValue()+income);
             portfolio.setGain(portfolio.getNetVal()-portfolio.getCost());
-            NumberFormat nf = NumberFormat.getPercentInstance();
-            nf.setMaximumFractionDigits(1);
-            portfolio.setGainp(nf.format(portfolio.getGain()/portfolio.getNetVal()));
+            portfolio.setGainp(portfolio.getGain()/portfolio.getNetVal());
             portfolios.add(portfolio);
             log.info("they are : " + portfolio);
         }
         log.info(portfolios);
         return portfolios;
+
+    }
+
+    public List<Portfolio> getTop5Portfolio(){
+        List<Portfolio> portfolioList=getAllPortfolio();
+        Collections.sort(portfolioList, new sortTop());
+        int end=Math.min(5,portfolioList.size());
+        List<Portfolio> result=new ArrayList<>();
+        for(int i=0;i<end;i++){
+            if(portfolioList.get(i).getGainp()>0){
+                result.add(portfolioList.get(i));
+            }
+        }
+        return result;
+    }
+
+    public List<Portfolio> getBottom5Portfolio(){
+        List<Portfolio> portfolioList=getAllPortfolio();
+        Collections.sort(portfolioList, new sortBottom());
+        int end=Math.min(5,portfolioList.size());
+        List<Portfolio> result=new ArrayList<>();
+        for(int i=0;i<end;i++){
+            if(portfolioList.get(i).getGainp()<0){
+                result.add(portfolioList.get(i));
+            }
+        }
+
+        return result;
     }
 
 
@@ -79,5 +103,24 @@ public class PortfolioService {
 
 
 
+}
+
+class sortTop implements Comparator {
+
+    public int compare(Object o1, Object o2) {
+        if(((Portfolio)o1).getGainp()>((Portfolio)o2).getGainp())
+            return -1;
+        return 1;
+    }
+
+}
+
+class sortBottom implements Comparator {
+
+    public int compare(Object o1, Object o2) {
+        if(((Portfolio)o1).getGainp()>((Portfolio)o2).getGainp())
+            return 1;
+        return -1;
+    }
 
 }

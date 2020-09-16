@@ -26,7 +26,7 @@ public class Portfolio {
 
     private double netVal;
     private double gain;
-    private String gainp;
+    private double gainp;
 
     public Portfolio(Investment investment){
         this.id=investment.getId();
@@ -144,11 +144,11 @@ public class Portfolio {
         this.gain = gain;
     }
 
-    public String getGainp() {
+    public double getGainp() {
         return gainp;
     }
 
-    public void setGainp(String gainp) {
+    public void setGainp(double gainp) {
         this.gainp = gainp;
     }
 }
