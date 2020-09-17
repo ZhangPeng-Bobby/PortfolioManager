@@ -72,6 +72,7 @@ public class InvestmentService {
 //            Date magicDate = sdf.parse(time);
 //
 //            log.info("date after transfer: " + magicDate);
+
             Product specificDateProduct = productDao.findOneBySymbolAndTypeAndDate(investment.getSymbol(), PriceType.CLOSE, date);
 
             log.info("getting investment value, the date " + date + " product is " + specificDateProduct);
@@ -80,6 +81,10 @@ public class InvestmentService {
 
             if (specificDateProduct != null) {
                 closePrice = specificDateProduct.getPrice();
+            }
+
+            if(investment.getPurchasedDate().after(date)){
+                closePrice=0;
             }
 
             value += investment.getShare() * closePrice;

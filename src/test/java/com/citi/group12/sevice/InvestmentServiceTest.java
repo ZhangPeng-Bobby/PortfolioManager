@@ -51,4 +51,24 @@ class InvestmentServiceTest {
         assertNotNull(investmentService.getInvestmentVal(product1.getDate(),product1.getDate()));
         productDao.delete(product1.getId());
     }
+
+    @Test
+    void testAddNewInvestment() {
+    }
+
+    @Test
+    void getAllInvestment() {
+    }
+
+    @Test
+    void testDeleteInvestmentById() {
+    }
+
+    @Test
+    void testGetInvestmentVal() {
+    }
+
+    @Test
+    void getSpecificDayInvestmentValue() {
+    }
 }
