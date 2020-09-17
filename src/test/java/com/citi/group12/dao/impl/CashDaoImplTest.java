@@ -37,6 +37,11 @@ class CashDaoImplTest {
 
     @Test
     void update() {
+        cashDao.save(cash);
+        cash.setBalance(100);
+        cashDao.update(cash);
+        assertEquals(100,cashDao.findOne(cash.getId()).getBalance());
+        cashDao.delete(cash.getId());
     }
 
     @Test
@@ -46,10 +51,16 @@ class CashDaoImplTest {
 
     @Test
     void findOne() {
-        assertNotNull(cashDao.findOne("5f5f12c1c5103c69fa020811"));
+        cashDao.save(cash);
+        assertNotNull(cashDao.findOne(cash.getId()));
+        cashDao.delete(cash.getId());
     }
 
     @Test
     void delete() {
+        cashDao.save(cash);
+        int i=cashDao.findAll().size();
+        cashDao.delete(cash.getId());
+        assertEquals(1,i-cashDao.findAll().size());
     }
 }

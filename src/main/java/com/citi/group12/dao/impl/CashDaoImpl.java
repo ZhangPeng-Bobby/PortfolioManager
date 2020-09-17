@@ -32,7 +32,7 @@ public class CashDaoImpl implements CashDao {
         update.set("name", cash.getName()).set("type", cash.getType())
                 .set("balance", cash.getBalance());
 
-        UpdateResult result = mongoTemplate.updateFirst(query, update, Investment.class);
+        UpdateResult result = mongoTemplate.updateFirst(query, update, Cash.class);
 
         return result.getMatchedCount();
     }

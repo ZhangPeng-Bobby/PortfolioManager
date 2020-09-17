@@ -15,6 +15,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 class InvestmentDaoImplTest {
@@ -45,19 +48,31 @@ class InvestmentDaoImplTest {
 
     @Test
     void update() {
+        investmentDao.save(investment1);
+        investment1.setShare(100);
+        investmentDao.update(investment1);
+        assertEquals(100,investmentDao.findOne(investment1.getId()).getShare());
+        investmentDao.delete(investment1.getId());
     }
 
     @Test
     void findAll() {
         List<Investment> investments=investmentDao.findAll();
-        System.out.println(investments.toString());
+        assertNotNull(investments);
     }
 
     @Test
     void findOne() {
+        investmentDao.save(investment1);
+        assertEquals(10,investmentDao.findOne(investment1.getId()).getShare());
+        investmentDao.delete(investment1.getId());
     }
 
     @Test
     void delete() {
+        investmentDao.save(investment1);
+        int i=investmentDao.findAll().size();
+        investmentDao.delete(investment1.getId());
+        assertEquals(1,i-investmentDao.findAll().size());
     }
 }

@@ -39,7 +39,7 @@ public class ProductDaoImpl implements ProductDao {
                 .set("type",product.getType()).set("price", product.getPrice()).set("name",product.getName());
 
         //更新查询返回结果集的第一条
-        UpdateResult result = mongoTemplate.updateFirst(query, update, Investment.class);
+        UpdateResult result = mongoTemplate.updateFirst(query, update, Product.class);
         //更新查询返回结果集的所有
         // mongoTemplate.updateMulti(query,update,UserEntity.class);
         return result.getMatchedCount();

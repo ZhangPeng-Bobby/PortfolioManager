@@ -48,6 +48,11 @@ class ProductDaoImplTest {
 
     @Test
     void update() {
+        productDao.save(product1);
+        product1.setPrice(100);
+        productDao.update(product1);
+        assertEquals(100,productDao.findOneById(product1.getId()).getPrice());
+        productDao.delete(product1.getId());
     }
 
     @Test
@@ -58,16 +63,17 @@ class ProductDaoImplTest {
 
     @Test
     void findBySymbol(){
-        List<Product> products = productDao.findBySymbol("APPL");
+        List<Product> products = productDao.findBySymbol("C");
         assertNotNull(products);
     }
 
-    @Test
-    void findOne() {
-    }
 
     @Test
     void delete() {
+        productDao.save(product1);
+        int i=productDao.findAll().size();
+        productDao.delete(product1.getId());
+        assertEquals(1,i-productDao.findAll().size());
     }
 
     @Test
@@ -82,32 +88,42 @@ class ProductDaoImplTest {
 
     @Test
     void findOneById() {
-    }
-
-    @Test
-    void findBySymbolAndDate() {
-    }
-
-    @Test
-    void findBySymbolAndType() {
-    }
-
-    @Test
-    void findOneBySymbolAndTypeAndDate() throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date d=new Date();
-        String time=sdf.format(d);
-        Date date = sdf.parse(time);
-        Product product=productDao.findOneBySymbolAndTypeAndDate("APPL", PriceType.OPEN,date);
+        productDao.save(product1);
+        Product product=productDao.findOneById(product1.getId());
         assertNotNull(product);
     }
 
     @Test
-    void getProductBySymbolAndDateInterval() {
+    void findBySymbolAndDate() throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        List<Product> products=productDao.findBySymbolAndDate("C",sdf.parse("2020-09-10"));
+        assertNotNull(products);
+    }
+
+    @Test
+    void findBySymbolAndType() {
+        List<Product> products=productDao.findBySymbolAndType("C",PriceType.OPEN);
+        assertNotNull(products);
+    }
+
+    @Test
+    void findOneBySymbolAndTypeAndDate() throws ParseException {
+        productDao.save(product1);
+        Product product=productDao.findOneBySymbolAndTypeAndDate(product1.getSymbol(), product1.getType(),product1.getDate());
+        assertNotNull(product);
+    }
+
+    @Test
+    void getProductBySymbolAndDateInterval() throws ParseException {
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        List<Product> products=productDao.getProductBySymbolAndDateInterval("C",sdf.parse("2020-09-11"),sdf.parse("2020-09-13"));
+        assertNotNull(products);
     }
 
     @Test
     void findByType() {
+        List<Product> products=productDao.findByPortType(PriceType.OPEN.toString());
+        assertNotNull(products);
     }
 
     @Test
