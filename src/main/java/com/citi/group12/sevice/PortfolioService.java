@@ -112,9 +112,9 @@ public class PortfolioService {
     public JSONArray getCashAndInvestmentValues() {
         JSONArray jsonArray = new JSONArray();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//        Date date = sdf.parse("2020-09-13"); //just demo, should create a current date
-        Date date = new Date();
+        Date date = sdf.parse("2020-09-18"); //just demo, should create a current date
         List<Investment> investments = investmentDao.findAll();
+
         Double investmentVal = investmentService.getSpecificDayInvestmentValue(date, investments);
         Double cashVal = cashService.getCashVal(date, date).get(sdf.format(date));
 
@@ -168,7 +168,7 @@ public class PortfolioService {
             log.info(entry.getKey() + ":" + entry.getValue());
 //            typeAndValue.put(entry.getKey(), investmentService.getSpecificDayInvestmentValue(new Date(), entry.getValue()));
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = new Date();
+            Date date = sdf.parse("2020-9-18");
             typeAndValue.put(entry.getKey(), investmentService.getSpecificDayInvestmentValue(date, entry.getValue()));
         }
 
