@@ -111,8 +111,14 @@ public class PortfolioService {
     @SneakyThrows
     public JSONArray getCashAndInvestmentValues() {
         JSONArray jsonArray = new JSONArray();
+
+        //following is in order to transfer Date format
+        //we have to get rid of hh:mm:ss, just keep date info because there's no such data in db
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = sdf.parse("2020-09-18"); //just demo, should create a current date
+        Date currentDateWithTime = new Date();
+        String currentDate = sdf.format(currentDateWithTime);
+        Date date = sdf.parse(currentDate); //just demo, should create a current date
+
         List<Investment> investments = investmentDao.findAll();
 
         Double investmentVal = investmentService.getSpecificDayInvestmentValue(date, investments);
@@ -168,7 +174,9 @@ public class PortfolioService {
             log.info(entry.getKey() + ":" + entry.getValue());
 //            typeAndValue.put(entry.getKey(), investmentService.getSpecificDayInvestmentValue(new Date(), entry.getValue()));
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = sdf.parse("2020-9-18");
+            Date currentDateWithTime = new Date();
+            String currentDate = sdf.format(currentDateWithTime);
+            Date date = sdf.parse(currentDate);
             typeAndValue.put(entry.getKey(), investmentService.getSpecificDayInvestmentValue(date, entry.getValue()));
         }
 
