@@ -151,23 +151,7 @@ public class PortfolioService {
 
         for (Investment investment : investments
         ) {
-            //Following is to group the investments, if there's a better way going through Enum, optimise this
-            switch (investment.getType()) {
-                case BOND:
-                    this.groupInvestment(groupedInvestment, investment, PortType.BOND);
-                    break;
-                case STOCK:
-                    this.groupInvestment(groupedInvestment, investment, PortType.STOCK);
-                    break;
-                case FUTURE:
-                    this.groupInvestment(groupedInvestment, investment, PortType.FUTURE);
-                    break;
-                case ETF:
-                    this.groupInvestment(groupedInvestment, investment, PortType.ETF);
-                    break;
-                default:
-                    log.info("unknown type of " + investment.getType());
-            }
+            this.groupInvestment(groupedInvestment, investment, investment.getType());
         }
 
         for (Map.Entry<Enum<PortType>, List<Investment>> entry : entriesOfGroupedInvestment) {
